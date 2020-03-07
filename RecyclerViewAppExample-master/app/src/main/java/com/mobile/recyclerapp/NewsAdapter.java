@@ -33,10 +33,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        int layoutIdForNewsItem = R.layout.item_news;
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutIdForNewsItem,null, false);
+//        Context context = parent.getContext();
+//        int layoutIdForNewsItem = R.layout.item_news;
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        View view = inflater.inflate(layoutIdForNewsItem,null, false);
+
+
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_news, null, false);
         RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -48,21 +52,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final NewsViewHolder holder, final int position) {
-        final  News news = newsList.get(position);
-        holder.author.setText("by "+news.getAuthor());
+        final News news = newsList.get(position);
         holder.date.setText(news.getDate());
+        holder.author.setText(news.getAuthor());
         holder.title.setText(news.getTitle());
         holder.mainText.setText(news.getMainText());
         holder.likesCount.setText(String.valueOf(news.getLikesCount()));
         holder.commentsCount.setText(String.valueOf(news.getCommentsCount()));
-        if (news.Liked()==true){
-            //holder.likeBtn.setBackgroundColor(Color.parseColor("#FF0000"));
-            holder.likeBtn.setImageResource(R.drawable.ic_liked);
-        }else
-            holder.likeBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (listener!=null){
@@ -75,10 +72,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             public void onClick(View v) {
                 if (listener!=null){
                     listener.likeClick(position,news);
-
                 }
             }
         });
+
+        if (news.Liked()==true){
+            holder.likeBtn.setImageResource(R.drawable.ic_liked);
+        }else
+            holder.likeBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
     }
 
     @Override

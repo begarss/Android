@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/nav_home"
+        android:title="NEWSFEED"
+        android:checked="false"
+
+        />
+    <item android:id="@+id/nav_book"
+        android:title="TOP POEMS"
+        android:checked="false"
+
+        android:icon="@drawable/ic_arrow_drop_down_black_24dp"/>
+
+
+    <item android:id="@+id/nav_alert"
+        android:title="FOLLOWING"
+        android:checked="false"/>
+
+
+</menu>

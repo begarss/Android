@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,17 +26,16 @@ public class MainActivity extends AppCompatActivity {
     private NewsAdapter.ItemClickListener listener =null;
     private ImageButton like;
     boolean isLiked;
-    public void LikeItem (int position){
-        like.setBackgroundColor(R.drawable.ic_liked);
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private static Bundle mBundleRecyclerViewState;
 
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState!=null){
-            isLiked=savedInstanceState.getBoolean("liked");
-        }
+
+
         listener = new NewsAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position, News item) {
@@ -66,12 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-//        recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-//        recyclerView.setLayoutManager(layoutManager);
-//         newsAdapter = new NewsAdapter(newsGenerator(),listener);
-//         recyclerView.setAdapter(newsAdapter);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -90,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         String loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
         List<News> items = new ArrayList<>();
 
-        News n1 = new News("02/21/2020 11:45","Asma Moyeed","Loved ones", getString(R.string.first),1,5);
-        n1.setImages(R.drawable.a1);
+//        News n1 = new News("02/21/2020 11:45","Asma Moyeed","Loved ones", getString(R.string.first),1,5);
+//        n1.setImages(R.drawable.a1);
         News n2 = new News("02/22/2020 01:21","Toni Plant","The Lamb and The Wild Beasts", getString(R.string.second),1,5);
         n2.setImages(R.drawable.a3);
         News n3 = new News("02/22/2020 01:20","S. F. Tilly","Angry world", getString(R.string.third),5,5);
@@ -123,13 +120,6 @@ public class MainActivity extends AppCompatActivity {
         return items;
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("liked",isLiked);
-    }
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        savedInstanceState.getString("liked");
-    }
+
 }
 
