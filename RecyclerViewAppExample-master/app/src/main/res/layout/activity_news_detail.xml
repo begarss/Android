@@ -55,7 +55,7 @@
 
                     app:layout_constraintStart_toStartOf="@+id/tvTitle2"
                     app:layout_constraintTop_toBottomOf="@+id/tvMain2"
-                    app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
+                    app:srcCompat="@drawable/ic_favorite" />
 
                 <TextView
                     android:id="@+id/tvLikes2"

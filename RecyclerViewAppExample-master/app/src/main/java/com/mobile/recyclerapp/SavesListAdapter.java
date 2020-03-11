@@ -13,24 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
-    private List<News> main_list;
-
+public class SavesListAdapter extends RecyclerView.Adapter<SavesListAdapter.SavesListViewHolder> {
+    private List<News> newsList;
+    private Context context;
     @Nullable
     private ItemClickListener listener;
-    private @Nullable FragmentButtonListener fragmentButtonListener;
     private @Nullable FragmentLikeListener fragmentLikeListener;
 
-    private Context context;
-
-    public NewsAdapter(List<News> newsList, @Nullable ItemClickListener listener,
-                       @Nullable FragmentButtonListener fragmentButtonListener,
-                       @Nullable FragmentLikeListener fragmentLikeListener) {
-        News.newsList = newsList;
-        main_list=newsList;
+    public SavesListAdapter(List<News> newsList){
+        this.newsList=newsList;
+    }
+    public SavesListAdapter(List<News> newsList, @Nullable ItemClickListener listener,
+                            @Nullable FragmentLikeListener fragmentLikeListener
+    ) {
+        this.newsList = newsList;
         this.listener = listener;
-        this.fragmentButtonListener=fragmentButtonListener;
         this.fragmentLikeListener=fragmentLikeListener;
     }
 
@@ -38,7 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SavesListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 //        Context context = parent.getContext();
 //        int layoutIdForNewsItem = R.layout.item_news;
 //        LayoutInflater inflater = LayoutInflater.from(context);
@@ -53,12 +50,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         );
         view.setLayoutParams(params);
 
-        return  new NewsViewHolder((view));
+        return  new SavesListViewHolder((view));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NewsViewHolder holder, final int position) {
-        final News news = News.newsList.get(position);
+    public void onBindViewHolder(@NonNull final SavesListViewHolder holder, final int position) {
+        final News news = newsList.get(position);
         holder.date.setText(news.getDate());
         holder.author.setText(news.getAuthor());
         holder.title.setText(news.getTitle());
@@ -73,38 +70,45 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 }
             }
         });
-//        holder.likeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (listener!=null){
-//                    listener.likeClick(position,news);
-//                }
-//            }
-//        });
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener!=null)
-                    listener.likeClick(position,news);
+
+                if (fragmentLikeListener!=null)
+                    fragmentLikeListener.removeItemLike(news);
             }
         });
+//        holder.likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (fragmentButtonListener!=null)
+//                    if (news.Liked()==true){
+//                        holder.likeBtn.setImageResource(R.drawable.ic_liked);
+//
+//                        fragmentButtonListener.myClick(news,1);
+//                    } else {
+//                        holder.likeBtn.setImageResource(R.drawable.notLiked);
+//
+//                        fragmentButtonListener.myClick(news, 2);
+//                    }
+//            }
+//        });
 
         if (news.Liked()==true){
-
-           holder.likeBtn.setImageResource(R.drawable.ic_liked);
+            holder.likeBtn.setImageResource(R.drawable.ic_liked);
         }else
             holder.likeBtn.setImageResource(R.drawable.ic_favorite);
     }
 
     @Override
     public int getItemCount() {
-        return News.newsList.size();
+        return newsList.size();
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder{
+    public class SavesListViewHolder extends RecyclerView.ViewHolder{
         TextView author, date, title, mainText, likesCount, commentsCount;
-        ImageView likeBtn, commentBtn;
-        public NewsViewHolder(@NonNull View itemView) {
+        ImageView likeBtn;
+        public SavesListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             author= itemView.findViewById(R.id.tvAuthor);
@@ -113,7 +117,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             mainText = itemView.findViewById(R.id.tvMain);
             likesCount= itemView.findViewById(R.id.tvLike);
             commentsCount= itemView.findViewById(R.id.tvCom);
-            likeBtn= (ImageView)itemView.findViewById(R.id.ibLike);
+            likeBtn= itemView.findViewById(R.id.ibLike);
 
         }
     }
@@ -121,18 +125,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         void itemClick(int position, News item);
         void likeClick(int position, News item);
     }
-    public interface FragmentButtonListener{
-        void myClick(News news, int option);
-    }
     public interface FragmentLikeListener{
         void removeItemLike(News news);
     }
-    public void removeLike(News news){
-        int n = News.newsList.indexOf(news);
-        news.setLike(false);
-        //news.setLikeBtn(R.drawable.like);
-        News.newsList.set(n, news);
-        main_list.set(n, news);
-        this.notifyItemChanged(n);
-    }
+
 }

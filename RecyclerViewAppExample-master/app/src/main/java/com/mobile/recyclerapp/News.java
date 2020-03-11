@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class News implements Parcelable {
     private String date;
@@ -14,7 +16,8 @@ public class News implements Parcelable {
     private int likesCount;
     private  int images;
     private int commentsCount;
-
+    public static List<News> newsList = new ArrayList<>();
+    public static List<News> database = new ArrayList<>();
     public News(
             String date,
             String author,

@@ -2,16 +2,12 @@ package com.mobile.recyclerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class NewsDetailActivity extends AppCompatActivity {
 
@@ -53,10 +49,10 @@ public class NewsDetailActivity extends AppCompatActivity {
                     news.setLikesCount(news.getLikesCount()+1);
                     tvLikes.setText(String.valueOf(news.getLikesCount()));
                     isLiked=true;
-                    likeBtn.setImageResource(R.drawable.ic_liked);
+                    likeBtn.setBackgroundResource(R.drawable.ic_liked);
 
                 }else {
-                    likeBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    likeBtn.setBackgroundResource(R.drawable.ic_favorite);
 
                     news.setLike(false);
                     news.setLikesCount(news.getLikesCount()-1);
@@ -69,9 +65,9 @@ public class NewsDetailActivity extends AppCompatActivity {
         });
         if (isLiked==true){
             //holder.likeBtn.setBackgroundColor(Color.parseColor("#FF0000"));
-            likeBtn.setImageResource(R.drawable.ic_liked);
+            likeBtn.setBackgroundResource(R.drawable.ic_liked);
         }else
-            likeBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            likeBtn.setBackgroundResource(R.drawable.ic_liked);
 
 //        View view = LayoutInflater.from(parent.getContext())
 //                .inflate(R.layout.item_news, null, false);
