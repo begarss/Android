@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,10 @@ import java.util.List;
 
 public class NewsList extends Fragment {
     RecyclerView recyclerView;
+    RecyclerView recyclerView2;
+    ArrayList<StoriesModel> storiesModelArrayList=new ArrayList<>();
+    RecyclerViewAdapterStories adapterStories;
+
     private NewsAdapter adapter;
     boolean isLiked;
     private NewsAdapter newsAdapter;
@@ -30,10 +36,18 @@ public class NewsList extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater
+        final ViewGroup rootView = (ViewGroup)inflater
                 .inflate(R.layout.page, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView2=(RecyclerView) rootView.findViewById(R.id.recy_stories);
+        RecyclerView.LayoutManager layoutManager1=new LinearLayoutManager(getActivity());
+        ((LinearLayoutManager) layoutManager1).setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView2.setLayoutManager(layoutManager1);
+        adapterStories=new RecyclerViewAdapterStories(getActivity(),storiesModelArrayList);
+        recyclerView2.setAdapter(adapterStories);
+        populaterecyclerviewstories();
+
         listener = new NewsAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position, News item) {
@@ -59,7 +73,7 @@ public class NewsList extends Fragment {
                 }else {
                     item.setLike(false);
                     fragmentLikeListener.removeItemLike(item);
-                    item.setLikesCount(item.getLikesCount()-1);
+                    //item.setLikesCount(item.getLikesCount()-1);
 
                     isLiked=false;
                 }
@@ -87,9 +101,29 @@ public class NewsList extends Fragment {
 
         newsAdapter = new NewsAdapter(newsGenerator(), listener, fragmentButtonListener, fragmentLikeListener);
         recyclerView.setAdapter(newsAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
+
         like = rootView.findViewById(R.id.ibLike);
 
+
         return rootView;
+    }
+
+    private void populaterecyclerviewstories() {
+        StoriesModel
+
+                storiesModel=new StoriesModel("mumbiker.nikkhil",R.drawable.a1);
+        storiesModelArrayList.add(storiesModel);
+        storiesModel=new StoriesModel("carryminati",R.drawable.a2);
+        storiesModelArrayList.add(storiesModel);
+        storiesModel=new StoriesModel("bhuvan.bam",R.drawable.a3);
+        storiesModelArrayList.add(storiesModel);
+        storiesModel=new StoriesModel("easportsfifa",R.drawable.propic4);
+        storiesModelArrayList.add(storiesModel);
+        storiesModel=new StoriesModel("championsleague",R.drawable.av5);
+        storiesModelArrayList.add(storiesModel);
+        storiesModel=new StoriesModel("leomessi",R.drawable.av8);
+        storiesModelArrayList.add(storiesModel);
     }
 
     private List<News> newsGenerator() {
@@ -130,6 +164,8 @@ public class NewsList extends Fragment {
     }
     public void removeLike(News news){
         newsAdapter.removeLike(news);
+
+
     }
 
 }

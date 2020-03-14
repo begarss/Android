@@ -78,21 +78,7 @@ public class SavesListAdapter extends RecyclerView.Adapter<SavesListAdapter.Save
                     fragmentLikeListener.removeItemLike(news);
             }
         });
-//        holder.likeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (fragmentButtonListener!=null)
-//                    if (news.Liked()==true){
-//                        holder.likeBtn.setImageResource(R.drawable.ic_liked);
 //
-//                        fragmentButtonListener.myClick(news,1);
-//                    } else {
-//                        holder.likeBtn.setImageResource(R.drawable.notLiked);
-//
-//                        fragmentButtonListener.myClick(news, 2);
-//                    }
-//            }
-//        });
 
         if (news.Liked()==true){
             holder.likeBtn.setImageResource(R.drawable.ic_liked);

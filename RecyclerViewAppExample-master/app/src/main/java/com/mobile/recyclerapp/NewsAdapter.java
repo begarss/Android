@@ -130,6 +130,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public void removeLike(News news){
         int n = News.newsList.indexOf(news);
         news.setLike(false);
+        news.setLikesCount(news.getLikesCount()-1);
         //news.setLikeBtn(R.drawable.like);
         News.newsList.set(n, news);
         main_list.set(n, news);
