@@ -14,8 +14,8 @@
         android:layout_marginBottom="5dp"
         android:adjustViewBounds="false"
         android:background="@drawable/gradient"
-        
-        android:cropToPadding="false"
+
+        android:cropToPadding="true"
         android:foregroundTint="#1660AF"
         android:src="@drawable/propic4"/>
 <!--        app:civ_border_color="#BEDF1F1F"-->
